@@ -1,0 +1,53 @@
+%sum (List, MinPlusMax)
+sum([X],MinPlusMax) :- MinPlusMax is X.
+sum(L1, MinPlusMax) :- max1(L1,X), min1(L1,Y), MinPlusMax is X+Y.
+
+%sum1
+sum1([],0).
+sum1([H|T],Sum) :- sum1(T,S), Sum is H + S.
+
+%appendlist
+append1([],L2,L2).
+append1([H|T1],L2,[H|T3]) :- append1(T1,L2,T3).
+
+%insert
+insert(XL,X,L) :- delete(XL,X,L).
+
+%mean(List,MeanValue)
+mean(L1,MeanValue) :- length(L1,Len), sum1(L1,Sum), MeanValue is Sum/Len.
+
+%maxlist(List, LargestElem)
+maxlist([X],X).
+maxlist([H|T],X) :- maxlist(T,Tmax), X is max(H,Tmax).
+
+%is increasing
+isincreasing([_]).
+isincreasing([H,X|T]) :-  H =< X, isincreasing([X|T]).
+
+
+%is decreasing
+isdecreasing([_]).q
+isdecreasing([H,X|T]) :- H >= X, isdecreasing([X|T]).
+
+%allsame
+allsame([_]).
+allsame([H,X|T]) :- H = X, allsame([X|T]).
+
+%alldifferent
+alldiff([_]).
+alldiff([H|T]) :- \+ member(H,T), alldiff(T).
+
+%notallsame
+notallsame(L1) :- \+ allsame(L1).
+
+%sorted
+sorted(L1) :- isdecreasing(L1).
+sorted(L1) :- isincreasing(L1).
+
+%max
+max1([H],H).
+max1([H|T],Max) :- max1(T,Tmax), Max is max(H,Tmax).
+
+%min
+min1([H],H).
+min1([H|T], Min) :- min1(T,Tmin), Min is min(H,Tmin).
